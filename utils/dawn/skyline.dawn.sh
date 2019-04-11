@@ -254,7 +254,7 @@ if [ ! -f /tmp/skyline.dawn.secure.mysql.txt ]; then
   echo "Setting MySQL root user password"
   if [[ "$OS" == "CentOS" && "$OS_MAJOR_VERSION" == "6" ]]; then
     MYSQL_TEMPORARY_PASSWORD=$(grep "temporary password" /var/log/mysqld.log | grep -o "root@localhost.*" | cut -d " " -f2)
-    mysql -uroot -p\'${MYSQL_TEMPORARY_PASSWORD}\' --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+    mysql -uroot -p"'${MYSQL_TEMPORARY_PASSWORD}'" --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
     mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION; FLUSH PRIVILEGES;"
   fi
   MYSQL_EXIT_CODE=$?
