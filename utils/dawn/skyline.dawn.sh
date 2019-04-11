@@ -39,12 +39,12 @@
 YOUR_SERVER_IP_ADDRESS="$(ifconfig eth0 | grep -o "inet.*" | cut -d " " -f2)"                         # YOUR Skyline server public IP address
 YOUR_SKYLINE_SERVER_FQDN="$(hostname -f)"        # YOUR Skyline server FQDN
 YOUR_EMAIL="skyline@wix.com"                                # YOUR email address for the httpd server admin
-YOUR_OTHER_IP_ADDRESS="0.0.0.0"                          # YOUR current public IP address that you will be connecting from
+YOUR_OTHER_IP_ADDRESS="0.0.0.0"                            # YOUR current public IP address that you will be connecting from
 WEBAPP_AUTH_USER="admin"                                   # The username you want to use for http authentication
-WEBAPP_AUTH_USER_PASSWORD="$(echo {$HOSTNAME}_skyline)"    # The password you want to use for http authentication
-MYSQL_ROOT_PASSWORD="$(echo {$HOSTNAME}_skyline)"      # The MySQL root user password
-MYSQL_SKYLINE_PASSWORD="$(echo {$HOSTNAME}_skyline)"   # The Skyline DB user password
-REDIS_PASSWORD="$(echo {$HOSTNAME}_skyline)"        # The Redis password
+WEBAPP_AUTH_USER_PASSWORD="$(echo ${HOSTNAME}_skyline)"    # The password you want to use for http authentication
+MYSQL_ROOT_PASSWORD="$(echo ${HOSTNAME}_root_skyline)"      # The MySQL root user password
+MYSQL_SKYLINE_PASSWORD="$(echo ${HOSTNAME}_user_skyline)"   # The Skyline DB user password
+REDIS_PASSWORD="$(echo ${HOSTNAME}_redis_skyline)"        # The Redis password
 SKYLINE_RELEASE="master"                 # The Skyline release to deploy
 
 STARTED=$(date)
