@@ -42,9 +42,9 @@ YOUR_SKYLINE_SERVER_FQDN="$(hostname -f)"        # YOUR Skyline server FQDN
 YOUR_EMAIL="skyline@wix.com"                                # YOUR email address for the httpd server admin
 YOUR_OTHER_IP_ADDRESS="0.0.0.0"                            # YOUR current public IP address that you will be connecting from
 WEBAPP_AUTH_USER="admin"                                   # The username you want to use for http authentication
-WEBAPP_AUTH_USER_PASSWORD="${SHORT_HOSTNAME}_skyline"    # The password you want to use for http authentication
-MYSQL_ROOT_PASSWORD="${SHORT_HOSTNAME}_root_skyline"      # The MySQL root user password
-MYSQL_SKYLINE_PASSWORD="${SHORT_HOSTNAME}_user_skyline"   # The Skyline DB user password
+WEBAPP_AUTH_USER_PASSWORD="${SHORT_HOSTNAME}_Skyline12"    # The password you want to use for http authentication
+MYSQL_ROOT_PASSWORD="${SHORT_HOSTNAME}_root_Skyline1"      # The MySQL root user password
+MYSQL_SKYLINE_PASSWORD="${SHORT_HOSTNAME}_user_sKylIne8"   # The Skyline DB user password
 REDIS_PASSWORD="${SHORT_HOSTNAME}_redis_skyline"        # The Redis password
 SKYLINE_RELEASE="master"                 # The Skyline release to deploy
 
@@ -254,7 +254,7 @@ if [ ! -f /tmp/skyline.dawn.secure.mysql.txt ]; then
   echo "Setting MySQL root user password"
   if [[ "$OS" == "CentOS" && "$OS_MAJOR_VERSION" == "6" ]]; then
     MYSQL_TEMPORARY_PASSWORD=$(grep "temporary password" /var/log/mysqld.log | grep -o "root@localhost.*" | cut -d " " -f2)
-    mysql -uroot -p$MYSQL_TEMPORARY_PASSWORD --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+    mysql -uroot -p\'${MYSQL_TEMPORARY_PASSWORD}\' --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
     mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION; FLUSH PRIVILEGES;"
   fi
   MYSQL_EXIT_CODE=$?
