@@ -42,10 +42,10 @@ YOUR_EMAIL="skyline@wix.com"                                # YOUR email address
 YOUR_OTHER_IP_ADDRESS="0.0.0.0"                          # YOUR current public IP address that you will be connecting from
 WEBAPP_AUTH_USER="admin"                                   # The username you want to use for http authentication
 WEBAPP_AUTH_USER_PASSWORD="$(echo {$HOSTNAME}_skyline)"    # The password you want to use for http authentication
-MYSQL_ROOT_PASSWORD="$(echo {$HOSTNAME}_sql_root_skyline)"     # The MySQL root user password
-MYSQL_SKYLINE_PASSWORD="$(echo {$HOSTNAME}_sql_skyline)"  # The Skyline DB user password
-REDIS_PASSWORD="$(echo {$HOSTNAME}_skyline)"       # The Redis password
-SKYLINE_RELEASE="v1.2.121"                 # The Skyline release to deploy
+MYSQL_ROOT_PASSWORD="$(echo {$HOSTNAME}_skyline)"      # The MySQL root user password
+MYSQL_SKYLINE_PASSWORD="$(echo {$HOSTNAME}_skyline)"   # The Skyline DB user password
+REDIS_PASSWORD="$(echo {$HOSTNAME}_skyline)"        # The Redis password
+SKYLINE_RELEASE="master"                 # The Skyline release to deploy
 
 STARTED=$(date)
 #### Check if the user added variables in /etc/skyline/skyline.dawn.conf ####
@@ -253,9 +253,7 @@ if [ ! -f /tmp/skyline.dawn.secure.mysql.txt ]; then
   echo "Setting MySQL root user password"
   if [[ "$OS" == "CentOS" && "$OS_MAJOR_VERSION" == "6" ]]; then
     # MySQL 5.1 method
-#    mysql -e "UPDATE mysql.user SET Password = PASSWORD('${MYSQL_ROOT_PASSWORD}') WHERE User = 'root'"
-     echo "error :: why whould you used centos 6?"
-     exit 1
+    mysql -e "UPDATE mysql.user SET Password = PASSWORD('$MYSQL_ROOT_PASSWORD') WHERE User = 'root'"
   else
     MYSQL_TEMPORARY_PASSWORD=$(grep "temporary password" /var/log/mysqld.log | grep -o "root@localhost.*" | cut -d " " -f2)
     mysql -uroot -p$MYSQL_TEMPORARY_PASSWORD --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
@@ -548,7 +546,7 @@ if [ ! -d /opt/skyline/github/skyline/.git ]; then
   sleep 1
   mkdir -p /opt/skyline/github
   cd /opt/skyline/github || exit 1
-  git clone https://github.com/earthgecko/skyline.git
+  git clone https://github.com/wix-playground/skyline.git
 # @added 20180915 - Feature #2550: skyline.dawn.sh
 # Added permissions for skyline user
   chown skyline:skyline -R /opt/skyline/github
